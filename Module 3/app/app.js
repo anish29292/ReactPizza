@@ -12,7 +12,6 @@ var App = React.createClass({
   loadSampleData: function(){
     this.setState(samples);
     this.setState({selectedConversation: samples.humans["Rami Sayar"].conversations});
-
   },
   setSelectedConversation: function(human_index){
     this.setState({
@@ -26,13 +25,13 @@ var App = React.createClass({
         <button onClick={this.loadSampleData}>Load Sample Data</button>
         <div className="container">
           <div className="column">
-            <InboxPane humans={this.state.humans} setSelectedConversation={this.setSelectedConversation}/>
+            <InboxPane humans={this.state.humans} setSelectedConversation={this.setSelectedConversation} />
           </div>
           <div className="column">
-            <ConversationPane conversation={this.state.selectedConversation}/>
+            <ConversationPane conversation={this.state.selectedConversation} />
           </div>
           <div className="column">
-            <StorePane stores={this.state.stores}/>
+            <StorePane stores={this.state.stores} />
           </div>
         </div>
       </div>
@@ -40,10 +39,9 @@ var App = React.createClass({
   }
 });
 
-
 var InboxPane = React.createClass({
-  renderInboxItem: function(human){
-    return <InboxItem key={human} index={human} details={this.props.humans[human]} setSelectedConversation={this.props.setSelectedConversation}/>;
+  renderConvoSum: function(human){
+    return <InboxItem key={human} index={human} details={this.props.humans[human]} setSelectedConversation={this.props.setSelectedConversation} />;
   },
   render : function() {
     return (
@@ -58,7 +56,7 @@ var InboxPane = React.createClass({
             </tr>
           </thead>
           <tbody>
-            {Object.keys(this.props.humans).map(this.renderInboxItem)}
+            {Object.keys(this.props.humans).map(this.renderConvoSum)}
           </tbody>
         </table>
       </div>
@@ -66,9 +64,9 @@ var InboxPane = React.createClass({
   }
 });
 
-var InboxItem = React.createClass({ 
+var InboxItem = React.createClass({
   sortByDate: function(a, b) {
-      return a.time>b.time ? -1 : a.time<b.time ? 1 : 0;
+    return a.time>b.time ? -1 : a.time<b.time ? 1 : 0;
   },
   messageSummary: function(conversations){
     var lastMessage = conversations.sort(this.sortByDate)[0];
@@ -92,7 +90,7 @@ var ConversationPane = React.createClass({
   renderMessage: function(val){
     return <Message who={val.who} text={val.text} key={val.time.getTime()} />;
   },
-  render: function(){
+  render: function() {
     return (
       <div id="conversation-pane">
         <h1>Conversation</h1>
@@ -104,10 +102,12 @@ var ConversationPane = React.createClass({
     )
   }
 });
- 
+
 var Message = React.createClass({
-  render: function(){
-    return (<p>{this.props.who} said: "{this.props.text}"</p>);
+  render: function() {
+    return (
+      <p>{this.props.who} said: "{this.props.text}"</p>
+    )
   }
 });
 
